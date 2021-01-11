@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flectra>
+    
+
+    <template id="smart_invoice_lkr_tax_document">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                        <div class="row text-center" style="font-family: 'Times New Roman', Times, serif">
+                            <h2><strong><span t-esc="doc.company_id.name"/></strong></h2>
+                            <p>
+                                <span t-esc="doc.company_id.street"/> 
+                                <span t-esc="doc.company_id.street2"/> 
+                                <span t-esc="doc.company_id.city"/>
+                                <span t-esc="doc.company_id.state_id.name"/>
+                                <span t-esc="doc.company_id.zip"/> 
+                                <span t-esc="doc.company_id.country_id.name"/><br/>
+                                <span t-esc="doc.company_id.h_phone"/>
+                            </p>  
+                            <h3 class="text-uppercase" style="margin-bottom:double 1px black;">Tax Invoice</h3>              
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 p-1" style="border: solid 1px black; margin-left:10px;">
+                                <p>
+                                    <strong>CUSTOMER NAME ADDRESS</strong><br/>
+                                    <strong><span t-esc="doc.partner_id.name"/></strong><br/>
+                                    <span t-esc="doc.partner_id.street"/><br/>
+                                    <span t-esc="doc.partner_id.street2"/><br/>
+                                    <span t-esc="doc.partner_id.city"/><br/>
+                                    <span t-esc="doc.partner_id.state_id.name"/><br/>
+                                    <span t-esc="doc.partner_id.zip"/><br/>
+                                    <span t-esc="doc.partner_id.country_id.name"/><br/>
+                                    <table>
+                                        <tr>
+                                            <td>V.A.T. NO :</td>
+                                            <td><span t-esc="doc.partner_id.vat2"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tele NO :</td>
+                                            <td><span t-esc="doc.partner_id.phone"/> <span t-esc="doc.partner_id.mobile"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Order NO :</td>
+                                            <td><span t-esc="doc.origin"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Our Ref No :</td>
+                                            <td><span t-esc="doc.origin"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>AOD NO :</td>
+                                            <td><span t-esc="doc.origin"/></td>
+                                        </tr>
+                                    </table>
+                                    <!-- <span t-if="doc.partner_id.vat2">V.A.T. NO : <span t-esc="doc.partner_id.vat2"/></span><br/>
+                                    <span t-if="doc.partner_id.svat">S.V.A.T. NO : <span t-esc="doc.partner_id.svat"/></span><br/>
+                                     <span t-esc="doc.partner_id.zip"/><br/> -->
+                                
+                                </p>
+                            </div>
+                            <div class="col-xs-5" style="margin-left:10px;">
+                                    <table >
+                                        <tr>
+                                            <td>Invoice NO :</td>
+                                            <td><span t-esc="doc.number"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Invoice Date:</td>
+                                            <td><span t-esc="doc.date_invoice"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Our  VAT NO :</td>
+                                            <td><span t-esc="doc.company_id.vat2"/></td>
+                                        </tr>
+                                        
+                                    </table>
+                            </div>
+                            
+
+
+                            <div class="col-xs-12 " style="margin-top:15px;" >
+                                <table class="table cus_table" width='100%' > 
+                                    <thead>
+                                        <tr>
+                                            <th width='20%;'  style="border:1px solid black;" >Product Code</th>
+                                            <th width='30%;' style="border:1px solid black;" >Description</th>
+                                            <th width='10%;'  style="border:1px solid black;">Quantity</th>
+                                            <th width='10%;'  style="border:1px solid black;">Unit Price</th>
+                                            <th width='20%;'  style="border:1px solid black;">Amount Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="doc.invoice_line_ids" t-as="o">
+                                        <tr >
+                                            <td width='20%;' style="border:1px solid black;"><span t-esc='o.product_id.name'/></td>
+                                            <td width='30%;' style="border:1px solid black;"><span t-esc='o.name'/></td>
+                                            <td width='10%;' style="border:1px solid black;"><span t-esc='o.quantity'/></td>
+                                            <td width='10%;' style="border:1px solid black;"><span t-esc='o.price_unit'/></td>
+                                            <td width='10%;' style="border:1px solid black;"><span t-esc='o.price_subtotal'/></td>
+                                        </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                        
+                            </div>
+                        </div>
+                        
+                        <div class="clearfix">
+                            <div id="total" class="row">
+                                <div class="col-xs-5 pull-right">
+                                    <table class="table table-condensed" style="min-width: 250px;max-width: 400px;page-break-inside: avoid;">
+                                        <tr class="border-black" >
+                                            <td style="0"><strong>Total</strong></td>
+                                            <td class="text-right" style="border:1px solid #dddddd;">
+                                                <span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <!-- <t t-foreach="doc._get_tax_amount_by_group()" t-as="amount_by_group">
+                                            <tr style="border-bottom:1px solid #dddddd;">
+                                                <t t-if="len(doc.tax_line_ids) == 1 and doc.amount_untaxed == amount_by_group[2]">
+                                                    <td><span t-esc="amount_by_group[0]"/></td>
+                                                    <td class="text-right">
+                                                        <span t-esc="amount_by_group[3]" />
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                    <td>
+                                                        <span t-esc="amount_by_group[0]"/>
+                                                        <span>&amp;nbsp;<span>on</span>
+                                                            <t t-esc="amount_by_group[4]"/>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="amount_by_group[3]"/>
+                                                    </td>
+                                                </t>
+                                            </tr>
+                                        </t> -->
+                                        <tr class="border-black" >
+                                            <td style="0"><strong>V.A.T. 8%</strong></td>
+                                            <td class="text-right" style="border:1px solid #dddddd;">
+                                                <span t-field="doc.amount_tax" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-black" >
+                                            <td style="border:0"><strong>Grand Total</strong></td>
+                                            <td class="text-right" style="border:1px solid #dddddd;">
+                                                <span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 border border-dark" style="position:absolute; bottom:-1300px;">
+              
+                                <p>All payments should be made in favour of "<span t-esc="doc.company_id.name"/>".</p>
+
+                                <table width="100%" class="text-center">
+                                    <tbody>
+                                <tr>
+                                    <td  style=" padding-top:20px;"><span t-field="doc.create_uid.name" /></td>
+                                    
+                                    <td  style="padding-top:20px;">.............................</td>
+                                    <td  style=" padding-top:20px;">.............................</td>                  
+                                </tr>
+                                <tr>
+                                    <td>Prepared By</td>
+                                    <td>Checked By</td>
+                                    <td>Customer Signature</td>                  
+                                </tr>
+                                </tbody>
+                                </table>
+                        </div>
+                    
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="smart_invoice_lkr_tax_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="smart_traiding_accounts.smart_invoice_lkr_tax_document" />
+            </t>
+        </t>
+    </template>
+
+</flectra>
