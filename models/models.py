@@ -16,9 +16,14 @@ class Partner(models.Model):
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
-    cus_tax_types= fields.Selection([('tax','Tax Invoice'),('stax','Suspended Tax'),('alltax','All Inclusive'),('comtax','Commercial')]
-    , string='Tax Types')
-
+    cus_tax_types= fields.Selection([('tax','Tax Invoice'),('stax','Suspended Tax'),('alltax','All Inclusive'),('comtax','Commercial')], string='Tax Types')
+    suspended_tax = fields.Monetary(string="Suspended V.A.T. 8%", compute='_compute_svat_total')
+    
+    @api.depends('amount_total', 'cus_tax_types')
+    def _compute_svat_total(self):
+        for tax_line in self:
+            if tax_line.amount_total:
+                tax_line.suspended_tax = (tax_line.amount_total*8)/100
 
     @api.onchange('partner_id')
     def get_customer_tax_type(self):
@@ -28,9 +33,10 @@ class AccountInvoice(models.Model):
     @api.multi
     def new_invoice_print(self):       
         self.ensure_one()
-        if self.currency_id.name!="LKR":        
-            return self.env.ref('smart_traiding_accounts.smart_invoice_lkr_tax_menu').report_action(self)
-        else:        
+
+        if self.cus_tax_types=='stax':        
+            return self.env.ref('smart_traiding_accounts.smart_invoice_lkr_stax_menu').report_action(self)
+        else:
             return self.env.ref('smart_traiding_accounts.smart_invoice_lkr_tax_menu').report_action(self)
 # class smart_traiding_accounts(models.Model):
 #     _name = 'smart_traiding_accounts.smart_traiding_accounts'

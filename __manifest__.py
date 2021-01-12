@@ -29,6 +29,7 @@
         'views/templates.xml',
 
         'reports/invoice_lkr_tax_report.xml',
+        'reports/invoice_lkr_stax_report.xml',
         'reports/menu_report.xml',
     ],
     # only loaded in demonstration mode

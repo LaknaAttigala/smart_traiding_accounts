@@ -23,6 +23,19 @@
             name="smart_traiding_accounts.smart_invoice_lkr_tax_report"
             file="smart_traiding_accounts.smart_invoice_lkr_tax_report"
             report_type="qweb-pdf"
+            print_report_name="'Invoice - %s' % (object.number)"
+            menu="False"
+            paperformat="smart_traiding_inventory.purchase_agreement_a4_format"
+        />
+        <report
+            id="smart_invoice_lkr_stax_menu" 
+            model="account.invoice"
+            string="Print Invoice SVAT"
+            name="smart_traiding_accounts.smart_invoice_lkr_stax_report"
+            file="smart_traiding_accounts.smart_invoice_lkr_stax_report"
+            report_type="qweb-pdf"
+            print_report_name="'Invoice - %s' % (object.number)"
+            menu="False"
             paperformat="smart_traiding_inventory.purchase_agreement_a4_format"
         />
 

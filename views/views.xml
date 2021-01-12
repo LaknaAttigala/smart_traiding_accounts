@@ -32,6 +32,9 @@
       <xpath expr="//field[@name='payment_term_id']" position="after">      
           <field name="cus_tax_types" />
       </xpath>
+      <xpath expr="//field[@name='amount_total']" position="after">      
+          <field name="suspended_tax" />
+      </xpath>
 
     </field>
   </record>
