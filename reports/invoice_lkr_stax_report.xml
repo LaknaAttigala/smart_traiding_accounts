@@ -139,17 +139,17 @@
                         
                         <div class="clearfix">
                             <div id="total" class="row">  
-                                <div class="col-xs-5 pull-left">
+                                <div class="col-xs-5 pull-left" style="marigin-top:10px;">
                                     <p>
                                         All payments should be made in <br/>
                                         favour of "<span t-esc="doc.company_id.name"/>"
                                     </p>
                                 </div>                              
                                 <div class="col-xs-5 pull-right">
-                                    <table class="table table-condensed" style="min-width: 250px;max-width: 400px;page-break-inside: avoid;">
+                                    <table class="table table-condensed" style="min-width: 250px;max-width: 400px;page-break-inside: avoid;" width="100%">
                                         <tr  >
-                                            <td class="text-right" style="border:0;"><strong>Total</strong></td>
-                                            <td class="text-right" style="border:1px solid #dddddd;">
+                                            <td width="70%" class="text-right" style="border:0;"><strong>Total</strong></td>
+                                            <td width="30%" class="text-right" style="border:1px solid black;">
                                                 <span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                             </td>
                                         </tr>
@@ -176,29 +176,51 @@
                                         </t> -->
                                         <tr >
                                             <td class="text-right" style="border:0;"><strong>V.A.T. 8%</strong></td>
-                                            <td class="text-right" style="border:1px solid #dddddd;">
+                                            <td class="text-right" style="border:1px solid black;">
                                                 <span t-field="doc.amount_tax" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                             </td>
                                         </tr>
                                         <tr  >
                                             <td class="text-right" style="border:0;"><strong>Grand Total</strong></td>
-                                            <td class="text-right" style="border:1px solid #dddddd;">
+                                            <td class="text-right" style="border:1px solid black;">
                                                 <span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                             </td>
                                         </tr>
+                                        <t t-if="doc.currency_id.name=='LKR'">
+                                            <tr  >
+                                                <td width="70%" class="text-right" style="border:0;"><strong>Suspended V.A.T. 8%</strong></td>
+                                                <td width="30%" class="text-right" style="border:1px solid black;">
+                                                    <span t-field="doc.suspended_tax" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        
+                                    </table>
+                                        <t t-if="doc.currency_id.name!='LKR'">
+                                           <div class="col-xs-8 pull-right text-center" style="border-top:1px solid black; border-bottom:1px solid black; margin-bottom:10px;" >
+                                            Exchange Rate :<span  t-esc="doc.currency_id.rate"/>
+                                           </div>
+                                            <!-- <tr>
+                                                <td></td>
+                                                <td style="border-top:1px solid black; border-bottom:1px solid black;" >
+                                                Exchange Rate :<span  t-esc="doc.currency_id.rate"/>
+                                                </td>
+                                            </tr> -->
+                                      
+                                    <table class="table table-condensed" style="min-width: 250px;max-width: 400px;page-break-inside: avoid;">
+                                        
                                         <tr  >
-                                            <td class="text-right" style="border:0;"><strong>Suspended V.A.T. 8%</strong></td>
-                                            <td class="text-right" style="border:1px solid #dddddd;">
+                                            <td width="70%" class="text-right" style="border:0;"><strong>Suspended V.A.T. 8%</strong></td>
+                                            <td width="30%" class="text-right" style="border:1px solid black;">
                                                 <span t-field="doc.suspended_tax" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                             </td>
                                         </tr>
                                     </table>
+                                    </t>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 ">
-                                   <span t-if="doc.currency_id.name!='LKR'"><p ><span style="border:1px solid #dddddd;padding: 2px 6px 2px 3px;">Exchange Rate :<span  t-esc="doc.currency_id.rate"/></span></p></span> 
-                        </div>
+                      
                         <div class="col-xs-12 border border-dark" style="position:absolute; bottom:-1350px;">
                                 Postal Address:
                                 <p style="padding-left:10px;">

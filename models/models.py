@@ -33,9 +33,10 @@ class AccountInvoice(models.Model):
     @api.multi
     def new_invoice_print(self):       
         self.ensure_one()
-
         if self.cus_tax_types=='stax':        
             return self.env.ref('smart_traiding_accounts.smart_invoice_lkr_stax_menu').report_action(self)
+        if self.cus_tax_types=='alltax':        
+            return self.env.ref('smart_traiding_accounts.smart_invoice_alltax_menu').report_action(self)
         else:
             return self.env.ref('smart_traiding_accounts.smart_invoice_lkr_tax_menu').report_action(self)
 # class smart_traiding_accounts(models.Model):
