@@ -27,7 +27,7 @@
         'views/new_report_template.xml',
         'views/views.xml',
         'views/templates.xml',
-
+        # 'reports/invoice_commercial_report.xml',
         'reports/invoice_lkr_tax_report.xml',
         'reports/invoice_lkr_stax_report.xml',
         'reports/invoice_alltax_report.xml',

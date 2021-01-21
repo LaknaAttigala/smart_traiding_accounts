@@ -24,7 +24,6 @@
             file="smart_traiding_accounts.smart_invoice_lkr_tax_report"
             report_type="qweb-pdf"
             print_report_name="'Invoice - %s' % (object.number)"
-            menu="False"
             paperformat="smart_traiding_inventory.purchase_agreement_a4_format"
         />
         <report
@@ -35,7 +34,6 @@
             file="smart_traiding_accounts.smart_invoice_lkr_stax_report"
             report_type="qweb-pdf"
             print_report_name="'Invoice - %s' % (object.number)"
-            menu="False"
             paperformat="smart_traiding_inventory.purchase_agreement_a4_format"
         />
 
@@ -47,9 +45,10 @@
             file="smart_traiding_accounts.smart_invoice_alltax_report"
             report_type="qweb-pdf"
             print_report_name="'Invoice - %s' % (object.number)"
-            menu="False"
             paperformat="smart_traiding_inventory.purchase_agreement_a4_format"
         />
+
+        
 
         <!-- <report
             id="export_stock_valu_excel"
